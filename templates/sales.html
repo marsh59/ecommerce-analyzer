@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>💰 Sales Dashboard</h1>
+
+    <div class="card">
+        <div class="grid">
+            <div class="box">Total Sales<br>£{{total_sales}}</div>
+            <div class="box">Total Orders<br>{{total_orders}}</div>
+        </div>
+    </div>
+
+    <div class="card">
+        {{ trend_chart|safe }}
+    </div>
+
+    <div class="card">
+        {{ country_chart|safe }}
+    </div>
+
+</div>
+
+</body>
+</html>

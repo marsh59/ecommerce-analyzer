@@ -8,107 +8,36 @@
 
 <div class="container">
 
-    <h1>📊 E-Commerce Performance Analyzer</h1>
+    <h1> E-Commerce Performance Analyzer</h1>
 
-    <!-- Upload -->
     <div class="card">
-        <h2>Upload CSV</h2>
+        <h2>📂 Upload Dataset</h2>
         <input type="file" id="file">
         <button onclick="uploadFile()">Upload</button>
-        <p id="uploadStatus"></p>
+        <p id="status"></p>
     </div>
 
-    <!-- Buttons -->
-    <div class="buttons">
-        <button onclick="getSales()">Sales</button>
-        <button onclick="getProducts()">Products</button>
-        <button onclick="getCustomers()">Customers</button>
+    <div class="card">
+        <h2>📊 Dashboards</h2>
+        <a href="/sales"><button>💰 Sales Dashboard</button></a>
+        <a href="/products"><button>📦 Product Dashboard</button></a>
+        <a href="/customers"><button>👤 Customer Dashboard</button></a>
     </div>
-
-    <!-- Results -->
-    <div id="result" class="card"></div>
 
 </div>
 
 <script>
-
 function uploadFile() {
     let file = document.getElementById("file").files[0];
-
     let formData = new FormData();
     formData.append("file", file);
 
     fetch('/upload', { method: 'POST', body: formData })
     .then(res => res.json())
     .then(data => {
-        document.getElementById("uploadStatus").innerText = data.message || data.error;
+        document.getElementById("status").innerText = data.message;
     });
 }
-
-
-function getSales() {
-    fetch('/sales')
-    .then(res => res.json())
-    .then(data => {
-        if(data.error) return alert(data.error);
-
-        document.getElementById("result").innerHTML = `
-            <h2>Sales Dashboard</h2>
-            <div class="grid">
-                <div class="box">💰 Total Sales<br>₹${data.total_sales}</div>
-                <div class="box">🧾 Orders<br>${data.total_orders}</div>
-            </div>
-            <img src="${data.chart}">
-        `;
-    });
-}
-
-
-function getProducts() {
-    fetch('/products')
-    .then(res => res.json())
-    .then(data => {
-        if(data.error) return alert(data.error);
-
-        let table = "<table><tr><th>Product</th><th>Sales</th></tr>";
-
-        for (let key in data.products) {
-            table += `<tr><td>${key}</td><td>₹${data.products[key]}</td></tr>`;
-        }
-
-        table += "</table>";
-
-        document.getElementById("result").innerHTML = `
-            <h2>Top Products</h2>
-            ${table}
-            <img src="${data.chart}">
-        `;
-    });
-}
-
-
-function getCustomers() {
-    fetch('/customers')
-    .then(res => res.json())
-    .then(data => {
-        if(data.error) return alert(data.error);
-
-        let table = "<table><tr><th>Customer</th><th>Spending</th></tr>";
-
-        for (let key in data.customers) {
-            table += `<tr><td>${key}</td><td>₹${data.customers[key]}</td></tr>`;
-        }
-
-        table += "</table>";
-
-        document.getElementById("result").innerHTML = `
-            <h2>Top Customers</h2>
-            ${table}
-            <img src="${data.chart}">
-        `;
-    });
-}
-
 </script>
 
 </body>
