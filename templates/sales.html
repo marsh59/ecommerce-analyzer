@@ -1,30 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sales Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Dashboard · EcomAnalyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
 
-<div class="container">
-    <h1>💰 Sales Dashboard</h1>
+<div class="glow-top"></div>
 
-    <div class="card">
-        <div class="grid">
-            <div class="box">Total Sales<br>£{{total_sales}}</div>
-            <div class="box">Total Orders<br>{{total_orders}}</div>
-        </div>
-    </div>
+<div class="page-wrapper">
 
-    <div class="card">
-        {{ trend_chart|safe }}
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="/" class="brand">
+      <div class="brand-icon">📊</div>
+      EcomAnalyzer
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/sales" class="active">Sales</a>
+      <a href="/products">Products</a>
+      <a href="/customers">Customers</a>
+      <a href="/forecast">Forecast</a>
+      <a href="/rfm">RFM</a>
     </div>
+  </nav>
 
-    <div class="card">
-        {{ country_chart|safe }}
+  <!-- HEADER -->
+  <div class="db-header">
+    <a href="/" class="back" title="Back">←</a>
+    <div>
+      <div style="font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Dashboard</div>
+      <h1>💰 Sales Dashboard</h1>
     </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-box">
+        <div class="label">Total Revenue</div>
+        <div class="value">£{{ total_sales }}</div>
+    </div>
+    <div class="stat-box">
+        <div class="label">Total Orders</div>
+        <div class="value">{{ total_orders }}</div>
+    </div>
+    <div class="stat-box">
+        <div class="label">Avg Order Value</div>
+        <div class="value">£{{ avg_order_value }}</div>
+    </div>
+    <div class="stat-box">
+        <div class="label">Best Month</div>
+        <div class="value">{{ best_month }}</div>
+    </div>
+</div>
+
+  <!-- CHARTS -->
+  <p class="section-title">Sales Trend Over Time</p>
+  <div class="chart-card">
+    {{ trend_chart | safe }}
+  </div>
+
+  <p class="section-title" style="margin-top:32px;">Sales by Country</p>
+  <div class="chart-card">
+    {{ country_chart | safe }}
+  </div>
 
 </div>
+
+<script>
+// Make Plotly charts transparent to match dark theme
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.js-plotly-plot').forEach(el => {
+    if (window.Plotly) {
+      Plotly.relayout(el, {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor:  'rgba(0,0,0,0)',
+        font: { color: '#94a3b8', family: 'DM Sans, sans-serif' },
+        xaxis: { gridcolor: 'rgba(100,160,255,.08)', zerolinecolor: 'rgba(100,160,255,.08)' },
+        yaxis: { gridcolor: 'rgba(100,160,255,.08)', zerolinecolor: 'rgba(100,160,255,.08)' },
+      });
+    }
+  });
+});
+</script>
 
 </body>
 </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RFM Analysis · EcomAnalyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<div class="glow-top"></div>
+
+<div class="page-wrapper">
+
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="/" class="brand">
+      <div class="brand-icon">📊</div>
+      EcomAnalyzer
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/sales">Sales</a>
+      <a href="/products">Products</a>
+      <a href="/customers">Customers</a>
+      <a href="/forecast">Forecast</a>
+      <a href="/rfm" class="active">RFM</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="db-header">
+    <a href="/" class="back" title="Back">←</a>
+    <div>
+      <div style="font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Dashboard</div>
+      <h1>🎯 RFM Analysis</h1>
+    </div>
+  </div>
+
+  <!-- INFO BOX -->
+  <div style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);
+              border-radius:10px;padding:16px 20px;margin-bottom:28px;">
+    <p style="color:#38bdf8;font-size:.9rem;margin:0;">
+      📌 RFM Analysis segments customers based on
+      <strong>Recency</strong> (how recently they bought),
+      <strong>Frequency</strong> (how often they buy), and
+      <strong>Monetary</strong> (how much they spend).
+      Use this to identify your most valuable customers.
+    </p>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="label">🏆 Champions</div>
+      <div class="value" style="color:#34d399;">{{ total_champions }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">💙 Loyal</div>
+      <div class="value" style="color:#38bdf8;">{{ total_loyal }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">⚠ At Risk</div>
+      <div class="value" style="color:#fb923c;">{{ total_at_risk }}</

@@ -1,43 +1,306 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>E-Commerce Analyzer</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce Performance Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    /* ── Source Toggle ── */
+    .source-toggle {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .toggle-btn {
+      padding: 10px 28px;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .toggle-btn.active {
+      background: var(--surface2);
+      color: var(--text);
+      border-color: rgba(56,189,248,.35);
+    }
+
+    /* ── MySQL form ── */
+    .mysql-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .mysql-form .full { grid-column: 1 / -1; }
+    .mysql-form label {
+      display: block;
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .mysql-form input {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .mysql-form input:focus { border-color: var(--accent); }
+    .mysql-form input::placeholder { color: var(--muted); }
+  </style>
 </head>
 <body>
 
-<div class="container">
+<div class="glow-top"></div>
 
-    <h1> E-Commerce Performance Analyzer</h1>
+<div class="page-wrapper">
 
-    <div class="card">
-        <h2>📂 Upload Dataset</h2>
-        <input type="file" id="file">
-        <button onclick="uploadFile()">Upload</button>
-        <p id="status"></p>
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="/" class="brand">
+      <div class="brand-icon">📊</div>
+      EcomAnalyzer
+    </a>
+    <div class="nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="/sales">Sales</a>
+      <a href="/products">Products</a>
+      <a href="/customers">Customers</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">
+      <span>✦</span> Data Analytics Platform
+    </div>
+    <h1>E-Commerce Performance<br>Analyzer</h1>
+    <p>Connect your MySQL database or upload a CSV — then explore sales trends, product insights, and customer behaviour through interactive dashboards.</p>
+  </div>
+
+  <!-- DATA SOURCE SECTION -->
+  <p class="section-title">01 &nbsp; Choose Data Source</p>
+
+  <div class="upload-card">
+
+    <!-- Toggle buttons -->
+    <div class="source-toggle">
+      <button class="toggle-btn active" id="btn-csv"   onclick="showSource('csv')">📁 Upload CSV</button>
+      <button class="toggle-btn"        id="btn-mysql" onclick="showSource('mysql')">🗄️ MySQL Workbench</button>
     </div>
 
-    <div class="card">
-        <h2>📊 Dashboards</h2>
-        <a href="/sales"><button>💰 Sales Dashboard</button></a>
-        <a href="/products"><button>📦 Product Dashboard</button></a>
-        <a href="/customers"><button>👤 Customer Dashboard</button></a>
+    <!-- ── CSV Panel ── -->
+    <div id="panel-csv">
+      <h2>Import Your CSV File</h2>
+      <p>Supports standard e-commerce exports. Max 50 MB.</p>
+
+      <div class="file-area" id="file-area">
+        <input type="file" id="file" accept=".csv" onchange="showFileName(this)" />
+        <div class="file-area-inner">
+          <div class="file-icon">📁</div>
+          <p><strong>Click to browse</strong> or drag &amp; drop your file here</p>
+          <p style="margin-top:6px;">CSV files only</p>
+        </div>
+      </div>
+      <div id="file-name"></div>
+      <br>
+      <button class="btn-upload" onclick="uploadCSV()">
+        <span>↑</span> Upload &amp; Analyze
+      </button>
     </div>
+
+    <!-- ── MySQL Panel ── -->
+    <div id="panel-mysql" style="display:none;">
+      <h2>Connect MySQL Database</h2>
+      <p>Enter your MySQL Workbench connection details below.</p>
+
+      <div class="mysql-form">
+        <div>
+          <label>Host</label>
+          <input id="db-host" type="text" placeholder="localhost" value="localhost" />
+        </div>
+        <div>
+          <label>Port</label>
+          <input id="db-port" type="number" placeholder="3306" value="3306" />
+        </div>
+        <div>
+          <label>Username</label>
+          <input id="db-user" type="text" placeholder="root" />
+        </div>
+        <div>
+          <label>Password</label>
+          <input id="db-password" type="password" placeholder="••••••••" />
+        </div>
+        <div>
+          <label>Database Name</label>
+          <input id="db-name" type="text" placeholder="ecommerce_db" />
+        </div>
+        <div>
+          <label>Table Name</label>
+          <input id="db-table" type="text" placeholder="orders" />
+        </div>
+      </div>
+
+      <button class="btn-upload" onclick="connectMySQL()">
+        <span>🔌</span> Connect &amp; Load
+      </button>
+    </div>
+
+    <!-- Shared status message -->
+    <p id="status"></p>
+
+  </div>
+
+  <!-- DASHBOARDS -->
+  <p class="section-title">02 &nbsp; Dashboards</p>
+
+  <div class="dash-grid">
+
+    <a href="/sales" class="dash-card sales">
+      <span class="card-arrow">↗</span>
+      <span class="card-icon">💰</span>
+      <h3>Sales Dashboard</h3>
+      <p>Analyse revenue trends over time and understand your geographical distribution across countries.</p>
+      <span class="card-tag">↗ Sales Trend &nbsp;·&nbsp; 🌍 By Country</span>
+    </a>
+
+    <a href="/products" class="dash-card products">
+      <span class="card-arrow">↗</span>
+      <span class="card-icon">📦</span>
+      <h3>Product Dashboard</h3>
+      <p>Identify top-performing products and discover which categories drive the most revenue.</p>
+      <span class="card-tag">🏆 Top Products &nbsp;·&nbsp; 📊 By Category</span>
+    </a>
+
+    <a href="/customers" class="dash-card customers">
+      <span class="card-arrow">↗</span>
+      <span class="card-icon">👤</span>
+      <h3>Customer Dashboard</h3>
+      <p>Understand your highest-value customers and uncover spending patterns across your user base.</p>
+      <span class="card-tag">💎 Top Customers &nbsp;·&nbsp; 🔄 Repeat Orders</span>
+    </a>
+
+    <a href="/forecast" class="dash-card" style="border-color:rgba(251,146,60,.2);">
+      <span class="card-arrow">↗</span>
+      <span class="card-icon">🔮</span>
+      <h3>Sales Forecast</h3>
+      <p>Predict future sales for the next 6 months based on historical trends using machine learning.</p>
+      <span class="card-tag" style="background:rgba(251,146,60,.12);color:#fb923c;">
+        📈 Next 6 Months &nbsp;·&nbsp; 🤖 ML Powered
+      </span>
+    </a>
+
+    <a href="/rfm" class="dash-card" style="border-color:rgba(52,211,153,.2);">
+      <span class="card-arrow">↗</span>
+      <span class="card-icon">🎯</span>
+      <h3>RFM Analysis</h3>
+      <p>Segment your customers into Champions, Loyal, At Risk and Lost based on their buying behaviour.</p>
+      <span class="card-tag" style="background:rgba(52,211,153,.12);color:#34d399;">
+        🏆 Champions &nbsp;·&nbsp; ⚠ At Risk &nbsp;·&nbsp; ❌ Lost
+      </span>
+    </a>
+
+  </div>
 
 </div>
 
 <script>
-function uploadFile() {
-    let file = document.getElementById("file").files[0];
-    let formData = new FormData();
-    formData.append("file", file);
+  /* ── Toggle between CSV and MySQL panels ── */
+  function showSource(source) {
+    const isCSV = source === 'csv';
+    document.getElementById('panel-csv').style.display   = isCSV ? 'block' : 'none';
+    document.getElementById('panel-mysql').style.display = isCSV ? 'none'  : 'block';
+    document.getElementById('btn-csv').classList.toggle('active',   isCSV);
+    document.getElementById('btn-mysql').classList.toggle('active', !isCSV);
+    document.getElementById('status').textContent = '';
+  }
 
-    fetch('/upload', { method: 'POST', body: formData })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("status").innerText = data.message;
-    });
-}
+  /* ── CSV upload (unchanged logic) ── */
+  function showFileName(input) {
+    const el = document.getElementById('file-name');
+    if (input.files && input.files[0]) {
+      el.textContent = '✔ ' + input.files[0].name + ' selected';
+    }
+  }
+
+  async function uploadCSV() {
+    const file   = document.getElementById('file').files[0];
+    const status = document.getElementById('status');
+
+    if (!file) {
+      status.style.color = '#fb923c';
+      status.textContent = '⚠ Please select a CSV file first.';
+      return;
+    }
+
+    status.style.color   = '#64748b';
+    status.textContent   = '⏳ Uploading…';
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res  = await fetch('/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      status.style.color = '#34d399';
+      status.textContent = data.message;
+    } catch (e) {
+      status.style.color = '#f87171';
+      status.textContent = '✖ Upload failed. Please try again.';
+    }
+  }
+
+  /* ── MySQL connect ── */
+  async function connectMySQL() {
+    const status = document.getElementById('status');
+    status.style.color = '#64748b';
+    status.textContent = '⏳ Connecting to MySQL…';
+
+    const payload = {
+      host:     document.getElementById('db-host').value,
+      port:     document.getElementById('db-port').value,
+      user:     document.getElementById('db-user').value,
+      password: document.getElementById('db-password').value,
+      database: document.getElementById('db-name').value,
+      table:    document.getElementById('db-table').value,
+    };
+
+    try {
+      const res  = await fetch('/connect_mysql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      status.style.color = data.message.startsWith('✅') ? '#34d399' : '#f87171';
+      status.textContent = data.message;
+    } catch (e) {
+      status.style.color = '#f87171';
+      status.textContent = '✖ Connection failed. Please check your details.';
+    }
+  }
+
+  /* ── Drag-and-drop highlight ── */
+  const area = document.getElementById('file-area');
+  area.addEventListener('dragover',  e => { e.preventDefault(); area.style.borderColor = 'var(--accent)'; });
+  area.addEventListener('dragleave', () => { area.style.borderColor = ''; });
+  area.addEventListener('drop',      () => { area.style.borderColor = ''; });
 </script>
 
 </body>

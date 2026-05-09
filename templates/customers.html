@@ -1,19 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Customer Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Dashboard · EcomAnalyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
 
-<div class="container">
-    <h1>👤 Customer Analysis</h1>
+<div class="glow-top"></div>
 
-    <div class="card">
-        {{ customer_chart|safe }}
+<div class="page-wrapper">
+
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="/" class="brand">
+      <div class="brand-icon">📊</div>
+      EcomAnalyzer
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/sales">Sales</a>
+      <a href="/products">Products</a>
+      <a href="/customers" class="active">Customers</a>
+      <a href="/forecast">Forecast</a>
+      <a href="/rfm">RFM</a>
     </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="db-header">
+    <a href="/" class="back" title="Back">←</a>
+    <div>
+      <div style="font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Dashboard</div>
+      <h1>👤 Customer Dashboard</h1>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="label">Total Customers</div>
+      <div class="value">{{ total_customers }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">Most Loyal Customer</div>
+      <div class="value" style="font-size:1rem;">{{ most_loyal }}</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <p class="section-title">Top Customers by Revenue</p>
+  <div class="chart-card">
+    {{ customer_chart | safe }}
+  </div>
+
+  <p class="section-title" style="margin-top:32px;">Repeat Orders per Customer</p>
+  <div class="chart-card">
+    {{ repeat_chart | safe }}
+  </div>
+
+  <p class="section-title" style="margin-top:32px;">Customers by Country</p>
+  <div class="chart-card">
+    {{ country_chart | safe }}
+  </div>
 
 </div>
-
 </body>
 </html>

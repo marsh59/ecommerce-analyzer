@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Dashboard · EcomAnalyzer</title>
+  <title>Sales Forecast · EcomAnalyzer</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
@@ -21,9 +21,9 @@
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/sales">Sales</a>
-      <a href="/products" class="active">Products</a>
+      <a href="/products">Products</a>
       <a href="/customers">Customers</a>
-      <a href="/forecast">Forecast</a>
+      <a href="/forecast" class="active">Forecast</a>
       <a href="/rfm">RFM</a>
     </div>
   </nav>
@@ -33,31 +33,24 @@
     <a href="/" class="back" title="Back">←</a>
     <div>
       <div style="font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;">Dashboard</div>
-      <h1>📦 Product Dashboard</h1>
+      <h1>🔮 Sales Forecast</h1>
     </div>
   </div>
 
-  <!-- KPI CARDS -->
-  <div class="stat-row">
-    <div class="stat-box">
-      <div class="label">Total Products</div>
-      <div class="value">{{ total_products }}</div>
-    </div>
-    <div class="stat-box">
-      <div class="label">Best Selling Product</div>
-      <div class="value" style="font-size:1rem;">{{ best_product }}</div>
-    </div>
+  <!-- INFO BOX -->
+  <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);
+              border-radius:10px;padding:16px 20px;margin-bottom:28px;">
+    <p style="color:#fb923c;font-size:.9rem;margin:0;">
+      📌 This forecast is based on actual monthly sales from Dec 2010 to Dec 2011.
+      The dotted orange line shows predicted sales for the next 6 months.
+      The shaded area shows the confidence range (best and worst case).
+    </p>
   </div>
 
-  <!-- CHARTS -->
-  <p class="section-title">Top Products by Revenue</p>
+  <!-- CHART -->
+  <p class="section-title">Sales Forecast (Next 6 Months)</p>
   <div class="chart-card">
-    {{ product_chart | safe }}
-  </div>
-
-  <p class="section-title" style="margin-top:32px;">Revenue by Category</p>
-  <div class="chart-card">
-    {{ category_chart | safe }}
+    {{ forecast_chart | safe }}
   </div>
 
 </div>
