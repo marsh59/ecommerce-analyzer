@@ -82,6 +82,8 @@
       <a href="/sales">Sales</a>
       <a href="/products">Products</a>
       <a href="/customers">Customers</a>
+      <a href="/forecast">Forecast</a>
+      <a href="/rfm">RFM</a>
     </div>
   </nav>
 
@@ -92,6 +94,13 @@
     </div>
     <h1>E-Commerce Performance<br>Analyzer</h1>
     <p>Connect your MySQL database or upload a CSV — then explore sales trends, product insights, and customer behaviour through interactive dashboards.</p>
+  </div>
+
+  <!-- DATASET INFO -->
+  <div class="dataset-info">
+    <p>
+      <strong>About this dataset:</strong> This platform is built around a UK-based registered non-store online retail dataset covering transactions from <strong>December 2010 to December 2011</strong>. The dataset contains over <strong>500,000 transactions</strong> made by approximately <strong>4,300 unique customers</strong> across <strong>38 countries</strong>. Each record includes invoice number, product description, quantity, price, date, and customer ID. After uploading, the data is automatically cleaned — guest checkouts and cancelled orders are removed — giving you a reliable foundation for analysis. You will then be able to explore monthly revenue trends, top-performing products, most valuable customers, a 6-month sales forecast, and a full RFM customer segmentation — all from a single dashboard.
+    </p>
   </div>
 
   <!-- DATA SOURCE SECTION -->
@@ -221,7 +230,6 @@
 </div>
 
 <script>
-  /* ── Toggle between CSV and MySQL panels ── */
   function showSource(source) {
     const isCSV = source === 'csv';
     document.getElementById('panel-csv').style.display   = isCSV ? 'block' : 'none';
@@ -231,7 +239,6 @@
     document.getElementById('status').textContent = '';
   }
 
-  /* ── CSV upload (unchanged logic) ── */
   function showFileName(input) {
     const el = document.getElementById('file-name');
     if (input.files && input.files[0]) {
@@ -249,8 +256,8 @@
       return;
     }
 
-    status.style.color   = '#64748b';
-    status.textContent   = '⏳ Uploading…';
+    status.style.color = '#64748b';
+    status.textContent = '⏳ Uploading…';
 
     const formData = new FormData();
     formData.append('file', file);
@@ -266,7 +273,6 @@
     }
   }
 
-  /* ── MySQL connect ── */
   async function connectMySQL() {
     const status = document.getElementById('status');
     status.style.color = '#64748b';
@@ -296,7 +302,6 @@
     }
   }
 
-  /* ── Drag-and-drop highlight ── */
   const area = document.getElementById('file-area');
   area.addEventListener('dragover',  e => { e.preventDefault(); area.style.borderColor = 'var(--accent)'; });
   area.addEventListener('dragleave', () => { area.style.borderColor = ''; });

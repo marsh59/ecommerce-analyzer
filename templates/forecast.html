@@ -37,20 +37,57 @@
     </div>
   </div>
 
+  <!-- DEFINITION BOX -->
+  <div style="background:rgba(129,140,248,.07);border:1px solid rgba(129,140,248,.2);
+              border-radius:10px;padding:20px 22px;margin-bottom:28px;">
+    <p style="font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#818cf8;margin-bottom:10px;">
+      What is Sales Forecasting?
+    </p>
+    <p style="font-size:.9rem;line-height:1.75;margin:0;">
+      Sales forecasting is the process of <strong>predicting future revenue</strong> based on patterns found in historical sales data.
+      Instead of guessing, it uses a mathematical model to study how sales have behaved in the past — whether they are growing, declining, or following a seasonal pattern —
+      and then projects that behaviour forward into the future.
+      This forecast is powered by <strong>Holt-Winters Exponential Smoothing</strong>, a reliable and widely-used statistical method for time-series forecasting.
+      It works by giving more weight to recent sales data than older data, so the model is always more influenced by what happened recently rather than a long time ago.
+      The model was trained on monthly sales figures and learned the underlying trend to predict what the next 6 months of sales are likely to look like.
+      Forecasting helps businesses plan inventory, set revenue targets, and make smarter decisions before problems arise.
+    </p>
+  </div>
+
   <!-- INFO BOX -->
   <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);
               border-radius:10px;padding:16px 20px;margin-bottom:28px;">
     <p style="color:#fb923c;font-size:.9rem;margin:0;">
-      📌 This forecast is based on actual monthly sales from Dec 2010 to Dec 2011.
-      The dotted orange line shows predicted sales for the next 6 months.
-      The shaded area shows the confidence range (best and worst case).
+      📌 The <strong>cyan solid line</strong> shows actual past sales.
+      The <strong>shaded orange area</strong> wraps around both the historical and future period — it represents the confidence range, showing the best-case and worst-case boundaries of where sales could land.
+      The <strong>orange dotted line</strong> shows the model's predicted sales for the next 6 months.
     </p>
   </div>
 
   <!-- CHART -->
   <p class="section-title">Sales Forecast (Next 6 Months)</p>
+
+  <p class="chart-desc">
+    This chart combines a <strong>line chart</strong> (actual data) with a <strong>forecast line</strong> (predicted data) and a <strong>confidence band</strong> (shaded area).
+    The shaded area runs across the entire chart — covering both historical and future months — so you can see how closely the model tracked real sales in the past, and how wide the uncertainty grows as predictions go further ahead.
+    Reading left to right, you see real historical sales followed by the model's prediction for the next 6 months.
+  </p>
+
   <div class="chart-card">
     {{ forecast_chart | safe }}
+  </div>
+
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      The model was trained on actual monthly sales data ending in <strong>{{ last_actual_month }}</strong>,
+      when revenue stood at approximately <strong>£{{ last_actual_fmt }}</strong>.
+      Using Holt-Winters Exponential Smoothing, it detected the overall growth trend in the data and used it to forecast sales for the period
+      <strong>{{ first_pred_month }}</strong> to <strong>{{ last_pred_month }}</strong>,
+      with an average predicted monthly revenue of approximately <strong>£{{ avg_pred_rev }}</strong>.
+      The shaded confidence band covers both the historical and future period — in the historical section, you can see how well the model fits past data, and in the future section, the band widens slightly to reflect the natural increase in uncertainty over time.
+      This forecast should be treated as a directional estimate rather than an exact figure — real-world events like promotions, economic changes, or supply disruptions could shift actual results above or below the predicted range.
+    </p>
   </div>
 
 </div>

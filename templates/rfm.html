@@ -39,26 +39,155 @@
 
   <!-- INFO BOX -->
   <div style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);
-              border-radius:10px;padding:16px 20px;margin-bottom:28px;">
-    <p style="color:#38bdf8;font-size:.9rem;margin:0;">
-      📌 RFM Analysis segments customers based on
-      <strong>Recency</strong> (how recently they bought),
-      <strong>Frequency</strong> (how often they buy), and
-      <strong>Monetary</strong> (how much they spend).
-      Use this to identify your most valuable customers.
+              border-radius:10px;padding:20px 22px;margin-bottom:28px;">
+    <p style="font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#38bdf8;margin-bottom:10px;">
+      What is RFM Analysis?
+    </p>
+    <p style="color:var(--text);font-size:.9rem;line-height:1.75;margin:0;">
+      RFM Analysis is a customer segmentation technique used in marketing and business intelligence.
+      It ranks every customer on three dimensions:
+      <strong>Recency</strong> — how recently they made a purchase (fewer days = better),
+      <strong>Frequency</strong> — how many times they ordered (more orders = better), and
+      <strong>Monetary</strong> — how much total money they spent (higher amount = better).
+      Each customer receives a score from 1 to 4 on each dimension, and based on the combination of these scores,
+      they are placed into a segment. This helps the business understand exactly which customers are thriving,
+      which need attention, and which may already be lost — so resources can be directed where they will have the most impact.
     </p>
   </div>
 
-  <!-- KPI CARDS -->
-  <div class="stat-row">
-    <div class="stat-box">
-      <div class="label">🏆 Champions</div>
-      <div class="value" style="color:#34d399;">{{ total_champions }}</div>
+  <!-- KPI CARDS WITH DEFINITIONS AND SUMMARIES -->
+  <p class="section-title">Customer Segments Overview</p>
+
+  <!-- Champions -->
+  <div class="stat-box" style="margin-bottom:14px;padding:24px;">
+    <div class="label">🏆 Champions</div>
+    <div class="value" style="color:#34d399;">{{ total_champions }}</div>
+    <div class="kpi-desc" style="margin-top:10px;">
+      <strong style="color:#34d399;">Definition:</strong>
+      Champions are your absolute best customers. They bought very recently, buy very often, and spend the most money.
+      These are the customers who love your business and come back repeatedly without needing to be reminded.
+      They score 4 out of 4 on all three RFM dimensions.
     </div>
-    <div class="stat-box">
-      <div class="label">💙 Loyal</div>
-      <div class="value" style="color:#38bdf8;">{{ total_loyal }}</div>
+    <div class="kpi-desc" style="margin-top:8px;">
+      <strong style="color:#34d399;">Insight:</strong>
+      You have <strong>{{ total_champions }}</strong> Champion customers, each spending an average of <strong>£{{ champ_avg }}</strong>.
+      These customers are irreplaceable — they drive a disproportionate share of your revenue.
+      Reward them with exclusive early access, loyalty discounts, or personalised thank-you messages
+      to strengthen their attachment and prevent them from switching to competitors.
     </div>
-    <div class="stat-box">
-      <div class="label">⚠ At Risk</div>
-      <div class="value" style="color:#fb923c;">{{ total_at_risk }}</
+  </div>
+
+  <!-- Loyal -->
+  <div class="stat-box" style="margin-bottom:14px;padding:24px;">
+    <div class="label">💙 Loyal</div>
+    <div class="value" style="color:#38bdf8;">{{ total_loyal }}</div>
+    <div class="kpi-desc" style="margin-top:10px;">
+      <strong style="color:#38bdf8;">Definition:</strong>
+      Loyal customers buy regularly and spend reasonably well, but may not have purchased as recently or as frequently as Champions.
+      They are consistent, dependable buyers who have a genuine relationship with the business.
+      They score 3 or above on both Recency and Frequency.
+    </div>
+    <div class="kpi-desc" style="margin-top:8px;">
+      <strong style="color:#38bdf8;">Insight:</strong>
+      You have <strong>{{ total_loyal }}</strong> Loyal customers, averaging <strong>£{{ loyal_avg }}</strong> in spending.
+      This is your largest high-value group. With the right engagement — such as product recommendations,
+      seasonal offers, or referral incentives — many of these customers have the potential to become Champions.
+      Keeping them engaged consistently is key to growing this segment.
+    </div>
+  </div>
+
+  <!-- At Risk -->
+  <div class="stat-box" style="margin-bottom:14px;padding:24px;">
+    <div class="label">⚠ At Risk</div>
+    <div class="value" style="color:#fb923c;">{{ total_at_risk }}</div>
+    <div class="kpi-desc" style="margin-top:10px;">
+      <strong style="color:#fb923c;">Definition:</strong>
+      At Risk customers were once frequent buyers, but they have not purchased recently.
+      Their buying behaviour has slowed down significantly, and if left unattended, they are likely to stop buying altogether.
+      They score high on Frequency but low on Recency — meaning they used to buy often, but something has changed.
+    </div>
+    <div class="kpi-desc" style="margin-top:8px;">
+      <strong style="color:#fb923c;">Insight:</strong>
+      You have <strong>{{ total_at_risk }}</strong> At Risk customers, with an average spend of <strong>£{{ risk_avg }}</strong>.
+      This group requires immediate attention. A targeted win-back campaign — such as a personalised discount,
+      a "We miss you" email, or a reminder about new products they previously bought — could re-activate a significant portion
+      of these customers before they become Lost. The cost of re-engaging an existing customer is far lower than acquiring a new one.
+    </div>
+  </div>
+
+  <!-- Lost -->
+  <div class="stat-box" style="margin-bottom:14px;padding:24px;">
+    <div class="label">❌ Lost</div>
+    <div class="value" style="color:#f87171;">{{ total_lost }}</div>
+    <div class="kpi-desc" style="margin-top:10px;">
+      <strong style="color:#f87171;">Definition:</strong>
+      Lost customers have not purchased in a very long time and also did not buy frequently when they were active.
+      They score low on both Recency and Frequency, suggesting the relationship with the business has effectively ended.
+    </div>
+    <div class="kpi-desc" style="margin-top:8px;">
+      <strong style="color:#f87171;">Insight:</strong>
+      You have <strong>{{ total_lost }}</strong> Lost customers.
+      While some may be permanently gone, a small-scale re-engagement campaign with a compelling offer
+      is worth attempting — even recovering a small fraction can be profitable.
+      For the majority, resources are better spent on retaining Champions and converting At Risk customers
+      rather than pursuing Lost ones aggressively.
+    </div>
+  </div>
+
+  <!-- New Customer -->
+  <div class="stat-box" style="margin-bottom:32px;padding:24px;">
+    <div class="label">🆕 New Customer</div>
+    <div class="value" style="color:#a78bfa;">{{ total_new_customer }}</div>
+    <div class="kpi-desc" style="margin-top:10px;">
+      <strong style="color:#a78bfa;">Definition:</strong>
+      New Customers bought recently but have not yet established a frequent buying pattern.
+      They scored high on Recency but low on Frequency, meaning they are still in the early stages of their relationship with the business.
+    </div>
+    <div class="kpi-desc" style="margin-top:8px;">
+      <strong style="color:#a78bfa;">Insight:</strong>
+      You have <strong>{{ total_new_customer }}</strong> New Customers.
+      These customers represent a major growth opportunity. A well-timed follow-up —
+      such as a product recommendation email, an introductory discount on their next order,
+      or a welcome series — can significantly increase the chance that they become Loyal or even Champion customers over time.
+      First impressions matter, and nurturing new customers early pays long-term dividends.
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <p class="section-title">Customer Segments Distribution</p>
+
+  <p class="chart-desc">
+    A <strong>donut chart</strong> showing what proportion of all {{ total_customers_rfm }} analysed customers fall into each RFM segment.
+    Each slice represents one segment, and the percentage tells you how large that segment is relative to the total customer base.
+  </p>
+
+  <div class="chart-card">
+    {{ segment_chart | safe }}
+  </div>
+
+  <p class="section-title" style="margin-top:36px;">Average Revenue per Segment</p>
+
+  <p class="chart-desc">
+    A <strong>bar chart</strong> comparing the average amount of money spent by customers in each segment.
+    This reveals not just how many customers are in each group, but how valuable each group is financially —
+    a smaller segment with high average spend may be more important to the business than a large segment with low spend.
+  </p>
+
+  <div class="chart-card">
+    {{ monetary_chart | safe }}
+  </div>
+
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      As expected, <strong>Champions</strong> show the highest average revenue per customer at <strong>£{{ champ_avg }}</strong>,
+      confirming that the quality of engagement directly correlates with spending.
+      <strong>Loyal</strong> customers follow with <strong>£{{ loyal_avg }}</strong> on average.
+      The gap between Champions and Lost/At Risk customers is a clear signal that customer engagement strategy has a direct and measurable impact on revenue.
+      Investing in moving customers up the RFM ladder — from Loyal to Champion, or from At Risk to Loyal — is one of the highest-ROI activities a business can pursue.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

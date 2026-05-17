@@ -42,27 +42,80 @@
     <div class="stat-box">
       <div class="label">Total Customers</div>
       <div class="value">{{ total_customers }}</div>
+      <div class="kpi-desc">The count of unique Customer IDs in the cleaned dataset. Each ID represents one registered customer. Guest checkouts without a Customer ID have already been excluded during data cleaning.</div>
     </div>
     <div class="stat-box">
       <div class="label">Most Loyal Customer</div>
       <div class="value" style="font-size:1rem;">{{ most_loyal }}</div>
+      <div class="kpi-desc">The Customer ID who placed the highest number of unique orders throughout the entire period. This customer visited and purchased <strong>{{ most_loyal_orders }}</strong> times, making them the most frequent buyer in the dataset.</div>
     </div>
   </div>
 
-  <!-- CHARTS -->
-  <p class="section-title">Top Customers by Revenue</p>
+  <!-- TOP CUSTOMERS BY REVENUE -->
+  <p class="section-title" style="margin-top:12px;">Top Customers by Revenue</p>
+
+  <p class="chart-desc">
+    A <strong>bar chart</strong> where each bar represents one customer and its height shows their total spend. This makes it easy to compare which customers generated the most revenue for the business over the entire period.
+  </p>
+
   <div class="chart-card">
     {{ customer_chart | safe }}
   </div>
 
-  <p class="section-title" style="margin-top:32px;">Repeat Orders per Customer</p>
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      The highest-spending customer is <strong>Customer {{ top_customer_id }}</strong>,
+      who contributed <strong>£{{ top_customer_rev }}</strong> in total revenue.
+      The chart reveals a clear gap between the top customer and the rest, suggesting that the business relies heavily on a small group of very high-value buyers.
+      These customers represent the most critical segment for the business — losing even one of them could significantly impact revenue.
+      The business should prioritise retaining these customers through personalised offers and loyalty rewards.
+    </p>
+  </div>
+
+  <!-- REPEAT ORDERS PER CUSTOMER -->
+  <p class="section-title" style="margin-top:36px;">Repeat Orders per Customer</p>
+
+  <p class="chart-desc">
+    A <strong>bar chart</strong> showing the top 10 customers ranked by how many separate orders they placed. Unlike the revenue chart above, this measures loyalty through frequency of purchase rather than total money spent. A customer who orders many times — even in smaller amounts — is considered highly loyal.
+  </p>
+
   <div class="chart-card">
     {{ repeat_chart | safe }}
   </div>
 
-  <p class="section-title" style="margin-top:32px;">Customers by Country</p>
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      Customer <strong>{{ top_repeat_id }}</strong> holds the record for the most repeat purchases,
+      having placed <strong>{{ top_repeat_orders }}</strong> separate orders over the period.
+      This high order frequency indicates a deeply loyal customer who relies on this business as a regular supplier.
+      Notably, the most frequent buyer and the highest revenue customer may not always be the same person —
+      some customers place many small orders while others place few very large ones.
+      Both groups are valuable and should be managed differently in a retention strategy.
+    </p>
+  </div>
+
+  <!-- CUSTOMERS BY COUNTRY -->
+  <p class="section-title" style="margin-top:36px;">Customers by Country</p>
+
+  <p class="chart-desc">
+    A <strong>donut chart</strong> showing the geographical distribution of customers across international markets (United Kingdom excluded, as it represents the overwhelming majority). Each slice shows what percentage of international customers come from that country.
+  </p>
+
   <div class="chart-card">
     {{ country_chart | safe }}
+  </div>
+
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      Among international customers, <strong>{{ top_country_customers }}</strong> has the largest share
+      with <strong>{{ top_country_customers_count }}</strong> unique customers.
+      The chart shows that international customers are spread across multiple countries, though the distribution is uneven.
+      A few countries contribute the majority of international buyers while many contribute only a handful.
+      This geographic spread suggests an opportunity — markets with few customers but high average spend could be worth targeting with localised marketing campaigns.
+    </p>
   </div>
 
 </div>

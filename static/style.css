@@ -416,6 +416,16 @@ body::before {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* ── KPI description text under value ── */
+.stat-box .kpi-desc {
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 6px;
+  font-style: italic;
 }
 
 /* Chart card */
@@ -436,6 +446,65 @@ body::before {
   margin-bottom: 22px;
   text-transform: uppercase;
   letter-spacing: .07em;
+}
+
+/* ── Chart description ── */
+.chart-desc {
+  font-size: .85rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  padding-left: 2px;
+}
+
+/* ── Chart summary box ── */
+.chart-summary {
+  background: rgba(56,189,248,.05);
+  border: 1px solid rgba(56,189,248,.15);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.chart-summary .summary-title {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.chart-summary p {
+  font-size: .88rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Dataset info box ── */
+.dataset-info {
+  background: rgba(129,140,248,.06);
+  border: 1px solid rgba(129,140,248,.18);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin-top: -20px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.dataset-info p {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.dataset-info p strong {
+  color: var(--accent2);
 }
 
 /* ─── ERROR ─────────────────────────── */

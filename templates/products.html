@@ -42,22 +42,58 @@
     <div class="stat-box">
       <div class="label">Total Products</div>
       <div class="value">{{ total_products }}</div>
+      <div class="kpi-desc">The count of unique product descriptions in the dataset. Each distinct item name is counted once, regardless of how many times it was sold or how many units were ordered.</div>
     </div>
     <div class="stat-box">
       <div class="label">Best Selling Product</div>
       <div class="value" style="font-size:1rem;">{{ best_product }}</div>
+      <div class="kpi-desc">The product that generated the highest total revenue across the entire period, calculated by summing Quantity × Unit Price for every transaction involving that product. This is your most profitable item.</div>
     </div>
   </div>
 
-  <!-- CHARTS -->
-  <p class="section-title">Top Products by Revenue</p>
+  <!-- TOP PRODUCTS CHART -->
+  <p class="section-title" style="margin-top:12px;">Top Products by Revenue</p>
+
+  <p class="chart-desc">
+    A <strong>horizontal bar chart</strong> displays categories along the vertical axis and their values along the horizontal axis. This layout is ideal when category names are long (like product descriptions), as it gives each label enough space to be fully readable. Each bar represents total revenue earned by that product.
+  </p>
+
   <div class="chart-card">
     {{ product_chart | safe }}
   </div>
 
-  <p class="section-title" style="margin-top:32px;">Revenue by Category</p>
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      Out of {{ total_products }} unique products in the catalogue, the top revenue generator is
+      <strong>{{ top_product_name }}</strong>, which earned <strong>£{{ best_product_rev }}</strong> in total.
+      <strong>{{ second_product }}</strong> is the second highest earning product.
+      The chart reveals that revenue is not evenly spread — a small number of products contribute a disproportionately large share of total sales.
+      This is a classic example of the Pareto Principle (80/20 rule), where a handful of items drive the majority of revenue.
+      The business should ensure these top products are always well-stocked and prominently promoted.
+    </p>
+  </div>
+
+  <!-- REVENUE BY CATEGORY CHART -->
+  <p class="section-title" style="margin-top:36px;">Revenue by Category</p>
+
+  <p class="chart-desc">
+    A <strong>donut chart</strong> is a circular chart divided into slices, where each slice represents a category's proportion of the total. The hollow centre makes it easier to read the overall shape compared to a full pie chart. Here, each slice represents a product category derived from the first word of the product description.
+  </p>
+
   <div class="chart-card">
     {{ category_chart | safe }}
+  </div>
+
+  <div class="chart-summary">
+    <div class="summary-title">📊 Chart Insight</div>
+    <p>
+      The dominant product category by revenue is <strong>{{ top_category_name }}</strong>,
+      contributing approximately <strong>{{ top_category_pct }}%</strong> of total category revenue
+      with <strong>£{{ top_category_rev }}</strong> in sales.
+      The chart shows that while there are several active categories, revenue is concentrated in a few leading ones.
+      Categories with smaller slices represent niche or low-volume products that may benefit from targeted promotions to increase their share.
+    </p>
   </div>
 
 </div>

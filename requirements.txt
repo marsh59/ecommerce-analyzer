@@ -1,5 +1,6 @@
-flask
-pandas
-plotly
-prophet
-pymysql
+flask==3.0.3
+pandas==2.2.2
+plotly==5.22.0
+statsmodels==0.14.2
+pymysql==1.1.1
+gunicorn==22.0.0
