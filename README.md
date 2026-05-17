@@ -40,7 +40,7 @@ This app uses the **UCI Online Retail Dataset** — a UK-based online retail dat
 
 ### ⬇️ How to get the dataset
 
-The dataset file `online_retail.csv` is included in this repository or you  can download the dataset from [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/352/online+retail)
+The dataset file `online_retail.csv` is included in this repository or you  can download the dataset from [UCI Machine Learning Repository]  (https://archive.ics.uci.edu/dataset/352/online+retail) or  you can directly download data from deployed website.
 
 **Steps:**
 1. Go to this repository on GitHub
