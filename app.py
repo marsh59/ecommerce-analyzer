@@ -52,6 +52,15 @@ def clean_df(raw_df):
     raw_df['CustomerID']  = raw_df['CustomerID'].astype(str).str.replace('.0', '', regex=False)
     raw_df['InvoiceDate'] = pd.to_datetime(raw_df['InvoiceDate'], format='mixed')
     raw_df['Total']       = raw_df['Quantity'] * raw_df['UnitPrice']
+
+    cols = ['InvoiceNo', 'Description', 'Quantity',
+            'InvoiceDate', 'UnitPrice', 'CustomerID', 'Country', 'Total']
+    raw_df = raw_df[cols]
+
+    raw_df['Quantity']  = pd.to_numeric(raw_df['Quantity'],  downcast='integer')
+    raw_df['UnitPrice'] = pd.to_numeric(raw_df['UnitPrice'], downcast='float')
+    raw_df['Total']     = pd.to_numeric(raw_df['Total'],     downcast='float')
+
     return raw_df
 
 def get_cached(key, compute_fn):
@@ -59,6 +68,9 @@ def get_cached(key, compute_fn):
         _cache[key] = compute_fn()
     return _cache[key]
 
+def clear_cache():
+    global _cache
+    _cache = {}
 
 #  Home 
 @app.route('/')
@@ -90,6 +102,8 @@ def upload():
     try:
         raw = pd.read_csv(path, encoding='latin1')
         df  = clean_df(raw)
+        del raw
+        os.remove(path)
         _cache = {}
         return jsonify({"message": f"✅ CSV uploaded! {len(df):,} rows loaded."})
 
