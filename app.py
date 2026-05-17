@@ -42,7 +42,11 @@ ACCENT_COLORS = ['#38bdf8', '#818cf8', '#fb923c', '#34d399', '#f472b6', '#a78bfa
 
 def themed_fig(fig):
     fig.update_layout(**PLOTLY_LAYOUT)
-    return fig.to_html(full_html=False, config={'displayModeBar': False})
+    return fig.to_html(
+        full_html=False,
+        config={'displayModeBar': False},
+        include_plotlyjs='cdn'
+    )
 
 
 #  Clean dataframe 
