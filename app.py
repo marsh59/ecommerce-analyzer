@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import pandas as pd
 import os
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
@@ -56,6 +56,15 @@ def clean_df(raw_df):
 @app.route('/')
 def home():
     return render_template('index.html')
+
+
+@app.route('/download-dataset')
+def download_dataset():
+    return send_from_directory(
+        directory=os.path.join(app.root_path),
+        path='online_retail.csv',
+        as_attachment=True
+    )
 
 
 #  Upload CSV 
